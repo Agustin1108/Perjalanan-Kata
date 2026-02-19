@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perjalanan Kata | Dgreat</title>
+    <!-- Menggunakan font Google untuk nuansa indie dan cozy -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* === TEMA & VARIABEL WARNA (COZY & MINIMALIST) === */
+        :root {
+            --bg-color: #FDFBF7; /* Putih tulang/kertas tua */
+            --text-main: #2C241B; /* Coklat kopi gelap untuk teks */
+            --text-muted: #8A7968; /* Coklat pudar untuk detail */
+            --accent: #A36B4F; /* Terakota pudar untuk aksen/hover */
+            --border-color: #E2DCD0; /* Garis batas lembut */
+            --card-bg: #FFFFFF;
+        }
+
+        /* === RESET & BASE === */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        h1, h2, h3, .serif-text {
+            font-family: 'Lora', serif;
+            font-weight: 400;
+        }
+
+        a {
+            color: var(--text-main);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: var(--accent);
+        }
+
+        /* === LAYOUT UTAMA === */
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+            width: 100%;
+        }
+
+        /* === PENGUMUMAN / NOTIF === */
+        .announcement-bar {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            padding: 10px 0;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .ticker-wrap {
+            overflow: hidden;
+            white-space: nowrap;
+        }
+
+        .ticker {
+            display: inline-block;
+            animation: ticker 20s linear infinite;
+        }
+
+        @keyframes ticker {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        /* === HEADER === */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-style: italic;
+        }
+
+        /* === KARYA TULIS (GRID/LIST) === */
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background-color: var(--border-color);
+            margin-left: 15px;
+        }
+
+        .works-grid {
+            display: grid;
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .work-card {
+            background: var(--card-bg);
+            padding: 30px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .work-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(44, 36, 27, 0.05);
+            border-color: var(--accent);
+        }
+
+        .work-date {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .work-title {
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .work-excerpt {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* === FEEDBACK & REVIEW FORM === */
+        .feedback-section {
+            background-color: var(--card-bg);
+            padding: 40px;
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 60px;
+        }
+
+        .feedback-section p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            font-size: 0.95rem;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: var(--text-main);
+        }
+
+        input[type="text"], select, textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-main);
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        button.btn-submit {
+            background-color: var(--text-main);
+            color: var(--bg-color);
+            border: none;
+            padding: 12px 24px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.95rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        button.btn-submit:hover {
+            background-color: var(--accent);
+        }
+
+        /* === FOOTER === */
+        footer {
+            margin-top: auto;
+            text-align: center;
+            padding: 30px 0;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        /* === MODAL PEMBACA (MEMBACA KARYA) === */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(253, 251, 247, 0.95);
+            z-index: 100;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            max-width: 700px;
+            width: 90%;
+            margin: 50px auto;
+            padding: 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.05);
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+
+        .modal-overlay.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: var(--accent);
+        }
+
+        .modal-body-text {
+            font-family: 'Lora', serif;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            white-space: pre-wrap; /* Mempertahankan format paragraf */
+            color: #3a332a;
+        }
+        
+        .modal-header-text {
+            margin-bottom: 30px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .modal-content { padding: 30px 20px; margin: 20px auto; }
+            header h1 { font-size: 2rem; }
+            .feedback-section { padding: 25px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TEMPAT NOTIF / PENGUMUMAN -->
+    <div class="announcement-bar">
+        <div class="ticker-wrap">
+            <div class="ticker" id="announcement-text">
+                <!-- Teks akan diisi oleh JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <h1>Perjalanan Kata</h1>
+            <p>Instagram: @agus11082007</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- DAFTAR KARYA TULIS -->
+        <section>
+            <h2 class="section-title">Rak Tulisan</h2>
+            <div class="works-grid" id="works-container">
+                <!-- Kartu karya akan di-render di sini oleh JavaScript -->
+            </div>
+        </section>
+
+        <!-- KOTAK KRITIK & SARAN (TERHUBUNG KE WHATSAPP) -->
+        <section class="feedback-section" id="kontak">
+            <h2 class="serif-text" style="font-size: 1.5rem; margin-bottom: 10px;">Titip Pesan & Ulasan</h2>
+            <p>Punya pemikiran setelah membaca? Atau sekadar ingin menyapa? Tinggalkan ulasan, kritik, atau saran Anda. Pesan ini akan langsung terkirim ke ruang obrolan saya.</p>
+            
+            <form id="wa-form">
+                <div class="form-group">
+                    <label for="sender-name">Nama Pena / Panggilan</label>
+                    <input type="text" id="sender-name" placeholder="Misal: Senja" required>
+                </div>
+                <div class="form-group">
+                    <label for="message-type">Jenis Pesan</label>
+                    <select id="message-type" required>
+                        <option value="Review Karya">Review Karya</option>
+                        <option value="Kritik & Saran">Kritik & Saran</option>
+                        <option value="Sekadar Menyapa">Sekadar Menyapa</option>
+                        <option value="Lainnya">Lainnya</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message-content">Isi Pesan</label>
+                    <textarea id="message-content" placeholder="Tuliskan apa yang ada di pikiranmu..." required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Kirim via WhatsApp</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="current-year"></span> Perjalanan Kata | Ditulis dengan hati oleh Dgreat.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL UNTUK MEMBACA FULL KARYA -->
+    <div class="modal-overlay" id="article-modal">
+        <div class="modal-content">
+            <button class="close-btn" onclick="closeModal()">×</button>
+            <div class="modal-header-text">
+                <span class="work-date" id="modal-date"></span>
+                <h1 class="serif-text" id="modal-title" style="font-size: 2rem; margin-top: 5px;"></h1>
+            </div>
+            <div class="modal-body-text" id="modal-content">
+                <!-- Isi teks akan masuk ke sini -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ==========================================
+         JAVASCRIPT (PENGATURAN KONTEN & LOGIKA) 
+         ========================================== -->
+    <script>
+        // ---------------------------------------------------------
+        // 1. DATABASE MINI (EDIT KONTEN ANDA DI SINI)
+        // ---------------------------------------------------------
+
+        // A. Pengumuman / Notif Pembaca (Bisa ditambahkan lebih dari satu dengan pembatas)
+        const announcements = [
+            "Selamat datang di Perjalanan Kata. Silakan seduh kopimu dan nikmati bacaan hari ini.",
+            "Karya terbaru 'Fragmen Ingatan' baru saja diunggah.",
+            "Terbuka untuk kritik dan saran membangun melalui kolom di bawah."
+        ];
+
+        // B. Daftar Karya Tulis Anda
+        // Format: { id, title, date, excerpt (cuplikan), content (isi lengkap) }
+        const dataKarya = [
+            {
+                id: 1,
+                title: "Selangkah Menuju Duta Agak Laen",
+                date: "19 Februari 2026",
+                excerpt: "Karena pada akhirnya, selempang itu cuma kain.",
+                content: `
+Oleh: Dgreat
+
+Belakangan ini, kalau aku buka media sosial, rasanya populasi manusia di Indonesia itu terbagi dua: rakyat biasa dan mereka yang pakai selempang bertuliskan "Duta". Ada Duta Wisata, Duta Lingkungan, Duta Bahasa, sampai duta-duta level kecamatan yang namanya kadang agak maksa. Sebagai anak SMK jurusan Manajemen Perkantoran dan Layanan Bisnis (MPLB) yang baru saja beres PKL dan sudah mau UKK, aku melihat fenomena ini agak menggelitik. Karena konsep "berdampak" yang mereka tawarkan sering kali tidak sesuai dengan SOP (Standar Operasional Prosedur) kehidupan nyata.
+
+Di jurusan MPLB, kami diajarkan Pelayanan Prima. Intinya sederhana: berikan layanan terbaik, penuhi kebutuhan pelanggan, dan pastikan administrasi beres. Penampilan atau grooming itu penting, tapi itu cuma kulit luar. Kalau grooming sudah rapi, pakai blazer licin, rambut klimis, tapi pas disuruh mengelola arsip atau mengetik surat saja berantakan, itu namanya tidak kompeten. Nah, masalahnya, banyak "Duta" di luar sana yang berhenti di fase grooming doang.
+
+Banyak dari mereka merasa sudah "berdampak" hanya karena sudah foto pakai selempang, senyum lebar, terus di-upload ke Instagram dengan caption motivasi hasil copy-paste. Padahal, kalau dilihat dari kacamata manajemen, itu baru tahap branding, belum masuk ke tahap produksi atau realisasi program kerja.
+
+Pengalaman nyata aku waktu magang di sebuah instansi pemerintahan mengajarkan satu hal pahit: dunia kerja itu butuh output, bukan cuma outfit.
+
+Pernah suatu kali, ada kunjungan dari sekumpulan duta ke kantor tempatku magang. Mereka datang, berbaris rapi, mendengarkan arahan sebentar, lalu sibuk membuat konten TikTok. Setelah itu pulang. Katanya itu bentuk "sosialisasi". Padahal, sosialisasi tanpa data yang jelas dan tanpa follow-up yang terukur, kalau dalam ilmu administrasi, itu sama saja dengan laporan kosong. Nol besar.
+
+Ini yang mau aku kritisi. Menjadi Duta yang "Agak Laen" seharusnya bukan mau dilihat seberapa banyak likes yang didapat, melainkan seberapa konkret Laporan Pertanggungjawaban (LPJ) hidup mereka.
+
+Aku sering melihat duta yang menggembar-gemborkan isu lingkungan, tapi habis acara selesai, botol minum plastiknya ditinggal begitu saja di meja. Ada juga duta anti-narkoba atau kenakalan remaja, tapi pendekatannya kaku banget, cuma modal seminar di aula ber-AC yang pesertanya juga ngantuk. Itu tidak efektif. Dalam manajemen layanan bisnis, kita harus tahu siapa "klien" kita. Kalau targetnya anak muda, ya masuklah ke tongkrongan mereka, bukan malah bikin jarak dengan formalitas yang berlebihan.
+
+Kita yang usia 19 tahun ini sudah bukan anak kecil lagi. Kita butuh figur yang kerjanya taktis, logis, dan realistis.
+
+Mulailah bekerja dengan standar pelayanan prima yang sesungguhnya. Kalau kamu jadi Duta Kebersihan, ya pastikan kamu yang paling dulu pungut sampah. Karena pada akhirnya, selempang itu cuma kain.
+                `
+            }
+        ];
+
+
+        // ---------------------------------------------------------
+        // 2. LOGIKA APLIKASI WEB (JANGAN UBAH JIKA TIDAK PERLU)
+        // ---------------------------------------------------------
+
+        // Set Tahun Footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Render Pengumuman
+        const tickerEl = document.getElementById('announcement-text');
+        tickerEl.innerHTML = announcements.join(' &nbsp; | &nbsp; ');
+
+        // Render Daftar Karya
+        const worksContainer = document.getElementById('works-container');
+        
+        function renderWorks() {
+            worksContainer.innerHTML = '';
+            dataKarya.forEach(karya => {
+                const card = document.createElement('article');
+                card.className = 'work-card';
+                card.onclick = () => openModal(karya.id);
+                
+                card.innerHTML = `
+                    <span class="work-date">${karya.date}</span>
+                    <h3 class="work-title serif-text">${karya.title}</h3>
+                    <p class="work-excerpt">${karya.excerpt}</p>
+                `;
+                worksContainer.appendChild(card);
+            });
+        }
+
+        // Fungsi Modal (Buka/Tutup Artikel)
+        const modal = document.getElementById('article-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalDate = document.getElementById('modal-date');
+        const modalContent = document.getElementById('modal-content');
+
+        function openModal(id) {
+            const karya = dataKarya.find(item => item.id === id);
+            if (karya) {
+                modalTitle.textContent = karya.title;
+                modalDate.textContent = karya.date;
+                modalContent.textContent = karya.content;
+                modal.classList.add('active');
+                document.body.style.overflow = 'hidden'; // Mencegah scroll di background
+            }
+        }
+
+        function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto'; // Mengembalikan scroll
+        }
+
+        // Menutup modal jika klik di area luar kotak konten
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Logika Pengiriman Form WhatsApp Dgreat (087731949761)
+        const waForm = document.getElementById('wa-form');
+        
+        waForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Mencegah form reload page
+
+            const noWA = "6287731949761"; // Nomor Dgreat (0 diubah ke 62)
+            const nama = document.getElementById('sender-name').value.trim();
+            const tipe = document.getElementById('message-type').value;
+            const pesan = document.getElementById('message-content').value.trim();
+
+            // Format Pesan
+            const textWA = `Halo Dgreat, perkenalkan saya *${nama}*.%0A%0ASaya ingin menyampaikan *${tipe}* terkait Perjalanan Kata:%0A%0A"${pesan}"`;
+
+            // Membuat link WhatsApp (wa.me)
+            const waLink = `https://wa.me/${noWA}?text=${textWA}`;
+
+            // Buka di tab baru
+            window.open(waLink, '_blank');
+
+            // Reset form setelah mengirim
+            waForm.reset();
+        });
+
+        // Inisialisasi awal
+        renderWorks();
+
+    </script>
+</body>
+</html>
+
